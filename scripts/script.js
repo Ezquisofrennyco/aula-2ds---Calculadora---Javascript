@@ -13,3 +13,39 @@ const closeHistory = document.getElementById('close-history');
 const clearHistory = document.getElementById('clear-history');
 
 const themeToggle = document.getElementById('theme-toggle');
+
+function setTheme(mode) {
+    Document.documentElement.classList.toggle('dark', mode === 'dark');
+
+    themeToggle.setAttribute('aria-pressed', mode === 'dark');
+
+    localStorage.setItem('theme', mode);
+}
+
+setTheme(localStorage.getItem('theme') || 'light');
+
+themeToggle.onclick = () => {
+
+    const newMode = document.documentElement.classList.
+    contains('dark') ? 'light': 'dark';
+
+    setTheme(newMode);
+};
+ 
+ function getHistory {
+    
+    return JSON.parse(localStorage.getItem
+        ('calcHistory') || '[]');
+ }
+
+ function saveHistory(expr, res) {
+    let hist = getHistory ();
+    hist.push({expr, res});
+    if (hist.lenght > 50) hist.shift();
+    localStorage.setItem('calcHistory', JSON.stringify(hist));
+ }
+
+  function renderHistory() {
+     const hist = getHistory().slice(). reverse();
+     historyList.innerHTML = hist.lenght
+  }
