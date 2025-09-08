@@ -1,10 +1,10 @@
-const screen = document.getElementyById('answer');
+const screen = document.getElementById('answer');
 
 const buttons = document.querySelectorAll('.calc-btn');
 
-const historyBtn = document.getElementyById ('history-btn');
+const historyBtn = document.getElementById('history-btn');
 
-const historyPanel = document.getElementById ('history-panel');
+const historyPanel = document.getElementById('history-panel');
 
 const historyList = document.getElementById('history-list');
 
@@ -15,7 +15,7 @@ const clearHistory = document.getElementById('clear-history');
 const themeToggle = document.getElementById('theme-toggle');
 
 function setTheme(mode) {
-    Document.documentElement.classList.toggle('dark', mode === 'dark');
+    document.documentElement.classList.toggle('dark', mode === 'dark');
 
     themeToggle.setAttribute('aria-pressed', mode === 'dark');
 
@@ -26,26 +26,62 @@ setTheme(localStorage.getItem('theme') || 'light');
 
 themeToggle.onclick = () => {
 
-    const newMode = document.documentElement.classList.
-    contains('dark') ? 'light': 'dark';
+    const newMode = document.documentElement.classList.contains('dark') ? 'light': 'dark';
 
     setTheme(newMode);
-};
- 
- function getHistory {
-    
-    return JSON.parse(localStorage.getItem
-        ('calcHistory') || '[]');
- }
 
- function saveHistory(expr, res) {
+};
+
+function getHistory() {
+    return JSON.parse(localStorage.getItem('calcHistory') || '[]');
+}
+
+function saveHistory(expr, res) {
     let hist = getHistory ();
-    hist.push({expr, res});
+    hist.push({ expr, res });
     if (hist.lenght > 50) hist.shift();
     localStorage.setItem('calcHistory', JSON.stringify(hist));
- }
+}
 
-  function renderHistory() {
-     const hist = getHistory().slice(). reverse();
-     historyList.innerHTML = hist.lenght
-  }
+function renderHistory() {
+    const hist = getHistory().slice().reverse();
+    historyList.innerHTML = hist.lenght
+
+      historyList.innerHTML = hist.length                               
+    ? hist.map(item => `<div class="flex justify-between p-3 rounded bg-gray-100 dark:bg-gray-700">
+          <span>${item.expr}</span>
+          <span class="${item.res < 0 ? 'text-red-500' : 'text-green-500'} font-bold">${item.res}</span>
+          </div>`).join('')                                         
+    : `<p class="text-gray-500">No history yet</p>`;                
+}
+
+        historyBtn.onclick = () => {
+            renderHistory();
+            historyPanel.classList.remove
+            ('translate-y-full', 'sm:translate-x-full');
+        };
+
+        closeHistory.onclick = () => {
+            historyPanel.classList.add
+        ('translate-y-full', 'sm:translate-x-full');
+        };
+
+        clearHistory.onclick = () => {
+            localStorage.removeItem ('calcHistory');
+            renderHistory();
+        }; 
+
+        // LÓGICA CALCULADORA
+         function calcute(expr) {
+            try {
+                const tokens = expr.match(/(\d+(\.\d+)?|[+\-*/%()])/g);
+                const prec = {'+': 1, '-': 1, '*':2, '/':2, '%':2};
+                const output = [], ops = [];
+
+                tokens.forEach(t => {
+
+                    if (!isNaN(t)) output.push
+                    (parseFloat(t));
+                })
+            }
+         }
