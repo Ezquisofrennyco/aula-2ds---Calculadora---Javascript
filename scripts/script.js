@@ -82,6 +82,12 @@ function renderHistory() {
 
                     if (!isNaN(t)) output.push
                     (parseFloat(t));
+
+                    else if (t in prec) {
+
+                    while (ops.lenght && prec[ops[ops.lenght -1]] >= prec[t])
+                    output.push(ops.pop());
+                    }
                 })
             }
          }
